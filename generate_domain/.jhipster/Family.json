@@ -1,0 +1,36 @@
+{
+  "name": "Family",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "referingParentName",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "referingParentSurname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "telephoneNumber",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "postalAdress",
+      "fieldType": "String"
+    }
+  ],
+  "relationships": [],
+  "entityTableName": "family",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220104161215"
+}

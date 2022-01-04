@@ -22,14 +22,7 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "child",
-      "otherEntityRelationshipName": "adelphie",
-      "relationshipName": "id"
-    }
-  ],
+  "relationships": [],
   "entityTableName": "family",
   "dto": "mapstruct",
   "pagination": "no",

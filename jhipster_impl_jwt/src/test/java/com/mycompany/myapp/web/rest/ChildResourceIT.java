@@ -4,10 +4,12 @@ import static com.mycompany.myapp.web.rest.TestUtil.sameInstant;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.Child;
 import com.mycompany.myapp.repository.ChildRepository;
+import com.mycompany.myapp.service.ChildService;
 import com.mycompany.myapp.service.EntityManager;
 import com.mycompany.myapp.service.dto.ChildDTO;
 import com.mycompany.myapp.service.mapper.ChildMapper;
@@ -16,6 +18,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -27,14 +30,19 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
  * Integration tests for the {@link ChildResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureWebTestClient
 @WithMockUser
 class ChildResourceIT {
@@ -57,6 +65,9 @@ class ChildResourceIT {
     private static final Long DEFAULT_ADELPHIE = 1L;
     private static final Long UPDATED_ADELPHIE = 2L;
 
+    private static final Long DEFAULT_DIET = 1L;
+    private static final Long UPDATED_DIET = 2L;
+
     private static final String ENTITY_API_URL = "/api/children";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -66,8 +77,14 @@ class ChildResourceIT {
     @Autowired
     private ChildRepository childRepository;
 
+    @Mock
+    private ChildRepository childRepositoryMock;
+
     @Autowired
     private ChildMapper childMapper;
+
+    @Mock
+    private ChildService childServiceMock;
 
     @Autowired
     private EntityManager em;
@@ -90,7 +107,8 @@ class ChildResourceIT {
             .birthday(DEFAULT_BIRTHDAY)
             .gradeLevel(DEFAULT_GRADE_LEVEL)
             .classroom(DEFAULT_CLASSROOM)
-            .adelphie(DEFAULT_ADELPHIE);
+            .adelphie(DEFAULT_ADELPHIE)
+            .diet(DEFAULT_DIET);
         return child;
     }
 
@@ -107,12 +125,14 @@ class ChildResourceIT {
             .birthday(UPDATED_BIRTHDAY)
             .gradeLevel(UPDATED_GRADE_LEVEL)
             .classroom(UPDATED_CLASSROOM)
-            .adelphie(UPDATED_ADELPHIE);
+            .adelphie(UPDATED_ADELPHIE)
+            .diet(UPDATED_DIET);
         return child;
     }
 
     public static void deleteEntities(EntityManager em) {
         try {
+            em.deleteAll("rel_child__diet").block();
             em.deleteAll(Child.class).block();
         } catch (Exception e) {
             // It can fail, if other entities are still referring this - it will be removed later.
@@ -154,6 +174,7 @@ class ChildResourceIT {
         assertThat(testChild.getGradeLevel()).isEqualTo(DEFAULT_GRADE_LEVEL);
         assertThat(testChild.getClassroom()).isEqualTo(DEFAULT_CLASSROOM);
         assertThat(testChild.getAdelphie()).isEqualTo(DEFAULT_ADELPHIE);
+        assertThat(testChild.getDiet()).isEqualTo(DEFAULT_DIET);
     }
 
     @Test
@@ -209,6 +230,7 @@ class ChildResourceIT {
         assertThat(testChild.getGradeLevel()).isEqualTo(DEFAULT_GRADE_LEVEL);
         assertThat(testChild.getClassroom()).isEqualTo(DEFAULT_CLASSROOM);
         assertThat(testChild.getAdelphie()).isEqualTo(DEFAULT_ADELPHIE);
+        assertThat(testChild.getDiet()).isEqualTo(DEFAULT_DIET);
     }
 
     @Test
@@ -240,7 +262,27 @@ class ChildResourceIT {
             .jsonPath("$.[*].classroom")
             .value(hasItem(DEFAULT_CLASSROOM.intValue()))
             .jsonPath("$.[*].adelphie")
-            .value(hasItem(DEFAULT_ADELPHIE.intValue()));
+            .value(hasItem(DEFAULT_ADELPHIE.intValue()))
+            .jsonPath("$.[*].diet")
+            .value(hasItem(DEFAULT_DIET.intValue()));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllChildrenWithEagerRelationshipsIsEnabled() {
+        when(childServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(childServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllChildrenWithEagerRelationshipsIsNotEnabled() {
+        when(childServiceMock.findAllWithEagerRelationships(any())).thenReturn(Flux.empty());
+
+        webTestClient.get().uri(ENTITY_API_URL + "?eagerload=true").exchange().expectStatus().isOk();
+
+        verify(childServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -272,7 +314,9 @@ class ChildResourceIT {
             .jsonPath("$.classroom")
             .value(is(DEFAULT_CLASSROOM.intValue()))
             .jsonPath("$.adelphie")
-            .value(is(DEFAULT_ADELPHIE.intValue()));
+            .value(is(DEFAULT_ADELPHIE.intValue()))
+            .jsonPath("$.diet")
+            .value(is(DEFAULT_DIET.intValue()));
     }
 
     @Test
@@ -302,7 +346,8 @@ class ChildResourceIT {
             .birthday(UPDATED_BIRTHDAY)
             .gradeLevel(UPDATED_GRADE_LEVEL)
             .classroom(UPDATED_CLASSROOM)
-            .adelphie(UPDATED_ADELPHIE);
+            .adelphie(UPDATED_ADELPHIE)
+            .diet(UPDATED_DIET);
         ChildDTO childDTO = childMapper.toDto(updatedChild);
 
         webTestClient
@@ -324,6 +369,7 @@ class ChildResourceIT {
         assertThat(testChild.getGradeLevel()).isEqualTo(UPDATED_GRADE_LEVEL);
         assertThat(testChild.getClassroom()).isEqualTo(UPDATED_CLASSROOM);
         assertThat(testChild.getAdelphie()).isEqualTo(UPDATED_ADELPHIE);
+        assertThat(testChild.getDiet()).isEqualTo(UPDATED_DIET);
     }
 
     @Test
@@ -427,6 +473,7 @@ class ChildResourceIT {
         assertThat(testChild.getGradeLevel()).isEqualTo(DEFAULT_GRADE_LEVEL);
         assertThat(testChild.getClassroom()).isEqualTo(DEFAULT_CLASSROOM);
         assertThat(testChild.getAdelphie()).isEqualTo(DEFAULT_ADELPHIE);
+        assertThat(testChild.getDiet()).isEqualTo(DEFAULT_DIET);
     }
 
     @Test
@@ -446,7 +493,8 @@ class ChildResourceIT {
             .birthday(UPDATED_BIRTHDAY)
             .gradeLevel(UPDATED_GRADE_LEVEL)
             .classroom(UPDATED_CLASSROOM)
-            .adelphie(UPDATED_ADELPHIE);
+            .adelphie(UPDATED_ADELPHIE)
+            .diet(UPDATED_DIET);
 
         webTestClient
             .patch()
@@ -467,6 +515,7 @@ class ChildResourceIT {
         assertThat(testChild.getGradeLevel()).isEqualTo(UPDATED_GRADE_LEVEL);
         assertThat(testChild.getClassroom()).isEqualTo(UPDATED_CLASSROOM);
         assertThat(testChild.getAdelphie()).isEqualTo(UPDATED_ADELPHIE);
+        assertThat(testChild.getDiet()).isEqualTo(UPDATED_DIET);
     }
 
     @Test

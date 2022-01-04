@@ -1,0 +1,80 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-family-heading" data-cy="FamilyCreateUpdateHeading">Create or edit a Family</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_referingParentName">Refering Parent Name</label>
+          <input
+            type="text"
+            class="form-control"
+            name="referingParentName"
+            id="field_referingParentName"
+            data-cy="referingParentName"
+            formControlName="referingParentName"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_referingParentSurname">Refering Parent Surname</label>
+          <input
+            type="text"
+            class="form-control"
+            name="referingParentSurname"
+            id="field_referingParentSurname"
+            data-cy="referingParentSurname"
+            formControlName="referingParentSurname"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_telephoneNumber">Telephone Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="telephoneNumber"
+            id="field_telephoneNumber"
+            data-cy="telephoneNumber"
+            formControlName="telephoneNumber"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_postalAdress">Postal Adress</label>
+          <input
+            type="text"
+            class="form-control"
+            name="postalAdress"
+            id="field_postalAdress"
+            data-cy="postalAdress"
+            formControlName="postalAdress"
+          />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+{
+  "name": "Child",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "surname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "birthday",
+      "fieldType": "ZonedDateTime"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "classroom",
+      "otherEntityRelationshipName": "child",
+      "relationshipName": "classroom"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "family",
+      "otherEntityRelationshipName": "child",
+      "relationshipName": "adelphie"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "gradeLevel",
+      "otherEntityRelationshipName": "child",
+      "relationshipName": "gradeLevel"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "diet",
+      "otherEntityRelationshipName": "children",
+      "relationshipName": "diet",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "child",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220104170246"
+}

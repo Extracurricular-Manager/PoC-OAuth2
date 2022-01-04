@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
@@ -71,7 +72,16 @@ public class ChildService {
     @Transactional(readOnly = true)
     public Flux<ChildDTO> findAll() {
         log.debug("Request to get all Children");
-        return childRepository.findAll().map(childMapper::toDto);
+        return childRepository.findAllWithEagerRelationships().map(childMapper::toDto);
+    }
+
+    /**
+     * Get all the children with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Flux<ChildDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return childRepository.findAllWithEagerRelationships(pageable).map(childMapper::toDto);
     }
 
     /**
@@ -92,7 +102,7 @@ public class ChildService {
     @Transactional(readOnly = true)
     public Mono<ChildDTO> findOne(Long id) {
         log.debug("Request to get Child : {}", id);
-        return childRepository.findById(id).map(childMapper::toDto);
+        return childRepository.findOneWithEagerRelationships(id).map(childMapper::toDto);
     }
 
     /**

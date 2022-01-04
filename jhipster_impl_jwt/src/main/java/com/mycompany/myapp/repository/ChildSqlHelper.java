@@ -17,6 +17,7 @@ public class ChildSqlHelper {
         columns.add(Column.aliased("grade_level", table, columnPrefix + "_grade_level"));
         columns.add(Column.aliased("classroom", table, columnPrefix + "_classroom"));
         columns.add(Column.aliased("adelphie", table, columnPrefix + "_adelphie"));
+        columns.add(Column.aliased("diet", table, columnPrefix + "_diet"));
 
         columns.add(Column.aliased("classroom_id", table, columnPrefix + "_classroom_id"));
         columns.add(Column.aliased("adelphie_id", table, columnPrefix + "_adelphie_id"));

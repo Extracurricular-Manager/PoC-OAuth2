@@ -14,14 +14,7 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "child",
-      "otherEntityRelationshipName": "classroom",
-      "relationshipName": "id"
-    }
-  ],
+  "relationships": [],
   "entityTableName": "classroom",
   "dto": "mapstruct",
   "pagination": "no",

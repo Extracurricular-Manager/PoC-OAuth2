@@ -6,14 +6,7 @@
       "fieldType": "String"
     }
   ],
-  "relationships": [
-    {
-      "relationshipType": "one-to-many",
-      "otherEntityName": "child",
-      "otherEntityRelationshipName": "gradeLevel",
-      "relationshipName": "id"
-    }
-  ],
+  "relationships": [],
   "entityTableName": "grade_level",
   "dto": "mapstruct",
   "pagination": "no",

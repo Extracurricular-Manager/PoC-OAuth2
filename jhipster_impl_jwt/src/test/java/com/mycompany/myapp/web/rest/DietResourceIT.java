@@ -40,6 +40,9 @@ class DietResourceIT {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_CHILDREN = 1L;
+    private static final Long UPDATED_CHILDREN = 2L;
+
     private static final String ENTITY_API_URL = "/api/diets";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
@@ -67,7 +70,7 @@ class DietResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Diet createEntity(EntityManager em) {
-        Diet diet = new Diet().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION);
+        Diet diet = new Diet().name(DEFAULT_NAME).description(DEFAULT_DESCRIPTION).children(DEFAULT_CHILDREN);
         return diet;
     }
 
@@ -78,7 +81,7 @@ class DietResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Diet createUpdatedEntity(EntityManager em) {
-        Diet diet = new Diet().name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        Diet diet = new Diet().name(UPDATED_NAME).description(UPDATED_DESCRIPTION).children(UPDATED_CHILDREN);
         return diet;
     }
 
@@ -121,6 +124,7 @@ class DietResourceIT {
         Diet testDiet = dietList.get(dietList.size() - 1);
         assertThat(testDiet.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testDiet.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testDiet.getChildren()).isEqualTo(DEFAULT_CHILDREN);
     }
 
     @Test
@@ -172,6 +176,7 @@ class DietResourceIT {
         Diet testDiet = dietList.get(0);
         assertThat(testDiet.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testDiet.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testDiet.getChildren()).isEqualTo(DEFAULT_CHILDREN);
     }
 
     @Test
@@ -195,7 +200,9 @@ class DietResourceIT {
             .jsonPath("$.[*].name")
             .value(hasItem(DEFAULT_NAME))
             .jsonPath("$.[*].description")
-            .value(hasItem(DEFAULT_DESCRIPTION));
+            .value(hasItem(DEFAULT_DESCRIPTION))
+            .jsonPath("$.[*].children")
+            .value(hasItem(DEFAULT_CHILDREN.intValue()));
     }
 
     @Test
@@ -219,7 +226,9 @@ class DietResourceIT {
             .jsonPath("$.name")
             .value(is(DEFAULT_NAME))
             .jsonPath("$.description")
-            .value(is(DEFAULT_DESCRIPTION));
+            .value(is(DEFAULT_DESCRIPTION))
+            .jsonPath("$.children")
+            .value(is(DEFAULT_CHILDREN.intValue()));
     }
 
     @Test
@@ -243,7 +252,7 @@ class DietResourceIT {
 
         // Update the diet
         Diet updatedDiet = dietRepository.findById(diet.getId()).block();
-        updatedDiet.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        updatedDiet.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).children(UPDATED_CHILDREN);
         DietDTO dietDTO = dietMapper.toDto(updatedDiet);
 
         webTestClient
@@ -261,6 +270,7 @@ class DietResourceIT {
         Diet testDiet = dietList.get(dietList.size() - 1);
         assertThat(testDiet.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testDiet.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testDiet.getChildren()).isEqualTo(UPDATED_CHILDREN);
     }
 
     @Test
@@ -360,6 +370,7 @@ class DietResourceIT {
         Diet testDiet = dietList.get(dietList.size() - 1);
         assertThat(testDiet.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testDiet.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testDiet.getChildren()).isEqualTo(DEFAULT_CHILDREN);
     }
 
     @Test
@@ -373,7 +384,7 @@ class DietResourceIT {
         Diet partialUpdatedDiet = new Diet();
         partialUpdatedDiet.setId(diet.getId());
 
-        partialUpdatedDiet.name(UPDATED_NAME).description(UPDATED_DESCRIPTION);
+        partialUpdatedDiet.name(UPDATED_NAME).description(UPDATED_DESCRIPTION).children(UPDATED_CHILDREN);
 
         webTestClient
             .patch()
@@ -390,6 +401,7 @@ class DietResourceIT {
         Diet testDiet = dietList.get(dietList.size() - 1);
         assertThat(testDiet.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testDiet.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testDiet.getChildren()).isEqualTo(UPDATED_CHILDREN);
     }
 
     @Test

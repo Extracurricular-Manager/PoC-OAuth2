@@ -28,6 +28,7 @@ public class DietRowMapper implements BiFunction<Row, String, Diet> {
         entity.setId(converter.fromRow(row, prefix + "_id", Long.class));
         entity.setName(converter.fromRow(row, prefix + "_name", String.class));
         entity.setDescription(converter.fromRow(row, prefix + "_description", String.class));
+        entity.setChildren(converter.fromRow(row, prefix + "_children", Long.class));
         return entity;
     }
 }

@@ -28,11 +28,11 @@ public class ChildToDiet implements Serializable {
     private Long idDiet;
 
     @Transient
-    @JsonIgnoreProperties(value = { "classroom", "adelphie", "gradeLevel", "ids" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "classroom", "adelphie", "gradeLevel", "diets" }, allowSetters = true)
     private Set<Child> idChildren = new HashSet<>();
 
     @Transient
-    @JsonIgnoreProperties(value = { "ids" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "children" }, allowSetters = true)
     private Set<Diet> idDiets = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -91,13 +91,11 @@ public class ChildToDiet implements Serializable {
 
     public ChildToDiet addIdChild(Child child) {
         this.idChildren.add(child);
-        child.getIds().add(this);
         return this;
     }
 
     public ChildToDiet removeIdChild(Child child) {
         this.idChildren.remove(child);
-        child.getIds().remove(this);
         return this;
     }
 
@@ -116,13 +114,11 @@ public class ChildToDiet implements Serializable {
 
     public ChildToDiet addIdDiet(Diet diet) {
         this.idDiets.add(diet);
-        diet.getIds().add(this);
         return this;
     }
 
     public ChildToDiet removeIdDiet(Diet diet) {
         this.idDiets.remove(diet);
-        diet.getIds().remove(this);
         return this;
     }
 

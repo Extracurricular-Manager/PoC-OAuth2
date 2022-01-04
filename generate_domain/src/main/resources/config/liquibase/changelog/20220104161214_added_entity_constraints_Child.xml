@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <!--
+        Added the constraints for entity Child.
+    -->
+    <changeSet id="20220104161214-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="classroom_id"
+                                 baseTableName="child"
+                                 constraintName="fk_child__classroom_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="classroom"/>
+
+        <addForeignKeyConstraint baseColumnNames="adelphie_id"
+                                 baseTableName="child"
+                                 constraintName="fk_child__adelphie_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="family"/>
+
+        <addForeignKeyConstraint baseColumnNames="grade_level_id"
+                                 baseTableName="child"
+                                 constraintName="fk_child__grade_level_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="grade_level"/>
+
+        <addForeignKeyConstraint baseColumnNames="child_id"
+                                 baseTableName="rel_child__diet"
+                                 constraintName="fk_rel_child__diet__child_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="child"/>
+
+        <addForeignKeyConstraint baseColumnNames="diet_id"
+                                 baseTableName="rel_child__diet"
+                                 constraintName="fk_rel_child__diet__diet_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="diet"/>
+    </changeSet>
+</databaseChangeLog>

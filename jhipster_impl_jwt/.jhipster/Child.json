@@ -28,33 +28,37 @@
     {
       "fieldName": "adelphie",
       "fieldType": "Long"
+    },
+    {
+      "fieldName": "diet",
+      "fieldType": "Long"
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "classroom",
-      "otherEntityRelationshipName": "id",
+      "otherEntityRelationshipName": "child",
       "relationshipName": "classroom"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "family",
-      "otherEntityRelationshipName": "id",
+      "otherEntityRelationshipName": "child",
       "relationshipName": "adelphie"
     },
     {
       "relationshipType": "many-to-one",
       "otherEntityName": "gradeLevel",
-      "otherEntityRelationshipName": "id",
+      "otherEntityRelationshipName": "child",
       "relationshipName": "gradeLevel"
     },
     {
       "relationshipType": "many-to-many",
-      "otherEntityName": "childToDiet",
-      "otherEntityRelationshipName": "idChild",
-      "relationshipName": "id",
-      "ownerSide": false
+      "otherEntityName": "diet",
+      "otherEntityRelationshipName": "children",
+      "relationshipName": "diet",
+      "ownerSide": true
     }
   ],
   "entityTableName": "child",

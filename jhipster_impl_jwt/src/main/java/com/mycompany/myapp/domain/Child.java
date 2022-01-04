@@ -40,21 +40,21 @@ public class Child implements Serializable {
     @Column("adelphie")
     private Long adelphie;
 
+    @Column("diet")
+    private Long diet;
+
     @Transient
-    @JsonIgnoreProperties(value = { "ids" }, allowSetters = true)
     private Classroom classroom;
 
     @Transient
-    @JsonIgnoreProperties(value = { "ids" }, allowSetters = true)
     private Family adelphie;
 
     @Transient
-    @JsonIgnoreProperties(value = { "ids" }, allowSetters = true)
     private GradeLevel gradeLevel;
 
     @Transient
-    @JsonIgnoreProperties(value = { "idChildren", "idDiets" }, allowSetters = true)
-    private Set<ChildToDiet> ids = new HashSet<>();
+    @JsonIgnoreProperties(value = { "children" }, allowSetters = true)
+    private Set<Diet> diets = new HashSet<>();
 
     @Column("classroom_id")
     private Long classroomId;
@@ -158,6 +158,19 @@ public class Child implements Serializable {
         this.adelphie = adelphie;
     }
 
+    public Long getDiet() {
+        return this.diet;
+    }
+
+    public Child diet(Long diet) {
+        this.setDiet(diet);
+        return this;
+    }
+
+    public void setDiet(Long diet) {
+        this.diet = diet;
+    }
+
     public Classroom getClassroom() {
         return this.classroom;
     }
@@ -200,34 +213,28 @@ public class Child implements Serializable {
         return this;
     }
 
-    public Set<ChildToDiet> getIds() {
-        return this.ids;
+    public Set<Diet> getDiets() {
+        return this.diets;
     }
 
-    public void setIds(Set<ChildToDiet> childToDiets) {
-        if (this.ids != null) {
-            this.ids.forEach(i -> i.removeIdChild(this));
-        }
-        if (childToDiets != null) {
-            childToDiets.forEach(i -> i.addIdChild(this));
-        }
-        this.ids = childToDiets;
+    public void setDiets(Set<Diet> diets) {
+        this.diets = diets;
     }
 
-    public Child ids(Set<ChildToDiet> childToDiets) {
-        this.setIds(childToDiets);
+    public Child diets(Set<Diet> diets) {
+        this.setDiets(diets);
         return this;
     }
 
-    public Child addId(ChildToDiet childToDiet) {
-        this.ids.add(childToDiet);
-        childToDiet.getIdChildren().add(this);
+    public Child addDiet(Diet diet) {
+        this.diets.add(diet);
+        diet.getChildren().add(this);
         return this;
     }
 
-    public Child removeId(ChildToDiet childToDiet) {
-        this.ids.remove(childToDiet);
-        childToDiet.getIdChildren().remove(this);
+    public Child removeDiet(Diet diet) {
+        this.diets.remove(diet);
+        diet.getChildren().remove(this);
         return this;
     }
 
@@ -285,6 +292,7 @@ public class Child implements Serializable {
             ", gradeLevel='" + getGradeLevel() + "'" +
             ", classroom=" + getClassroom() +
             ", adelphie=" + getAdelphie() +
+            ", diet=" + getDiet() +
             "}";
     }
 }

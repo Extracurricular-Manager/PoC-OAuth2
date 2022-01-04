@@ -83,7 +83,7 @@ jhipster:
   # CORS is only enabled by default with the "dev" profile
   cors:
     # Allow Ionic for JHipster by default (* no longer allowed in Spring Boot 2.4+)
-    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000,http://localhost:4200,https://localhost:4200'
+    allowed-origins: 'http://localhost:8100,https://localhost:8100,http://localhost:9000,https://localhost:9000'
     allowed-methods: '*'
     allowed-headers: '*'
     exposed-headers: 'Authorization,Link,X-Total-Count,X-${jhipster.clientApp.name}-alert,X-${jhipster.clientApp.name}-error,X-${jhipster.clientApp.name}-params'
@@ -93,7 +93,7 @@ jhipster:
     authentication:
       jwt:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-        base64-secret: ZjVlODlkNWE1NGJkNGE5Y2U4Y2I4ZDk0ODM1NTJmMTcxYjYzYmE4Y2Y5YmU2ZDFkZTYzNGRlNjljZGQzYmMzYWVhOTk4ZTU2YTM2ZTczYWE0MTMwYTY4ODE3YjExOTJhNDc5NWRhMzk3OTczYjMxZWVlMjg4MWM3YTExODcyNzk=
+        base64-secret: ZTk2NDJjZjg2ZWQwODQxYjlkN2IxZGEzMjk3NTFlZTM2Yjk1ZGYyOWVmN2JkNjZkMDc0NjkzZDg1YWQxOWVmOGZjODE3ODFiMGI4YTQ0YTYxZTVkNzZmYWJiNDcyMjZjNWZiNWM1MWY4MDZkN2UxMzE5YWZkNGU1YTNhYTY4NWM=
         # Token is valid 24 hours
         token-validity-in-seconds: 86400
         token-validity-in-seconds-for-remember-me: 2592000

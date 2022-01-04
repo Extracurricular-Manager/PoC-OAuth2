@@ -33,6 +33,7 @@ public class ChildRowMapper implements BiFunction<Row, String, Child> {
         entity.setGradeLevel(converter.fromRow(row, prefix + "_grade_level", String.class));
         entity.setClassroom(converter.fromRow(row, prefix + "_classroom", Long.class));
         entity.setAdelphie(converter.fromRow(row, prefix + "_adelphie", Long.class));
+        entity.setDiet(converter.fromRow(row, prefix + "_diet", Long.class));
         entity.setClassroomId(converter.fromRow(row, prefix + "_classroom_id", Long.class));
         entity.setAdelphieId(converter.fromRow(row, prefix + "_adelphie_id", Long.class));
         entity.setGradeLevelId(converter.fromRow(row, prefix + "_grade_level_id", String.class));

@@ -2,7 +2,6 @@ package com.mycompany.myapp.service.mapper;
 
 import com.mycompany.myapp.domain.ChildToDiet;
 import com.mycompany.myapp.service.dto.ChildToDietDTO;
-import java.util.Set;
 import org.mapstruct.*;
 
 /**

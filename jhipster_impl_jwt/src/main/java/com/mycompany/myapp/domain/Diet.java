@@ -27,9 +27,12 @@ public class Diet implements Serializable {
     @Column("description")
     private String description;
 
+    @Column("children")
+    private Long children;
+
     @Transient
-    @JsonIgnoreProperties(value = { "idChildren", "idDiets" }, allowSetters = true)
-    private Set<ChildToDiet> ids = new HashSet<>();
+    @JsonIgnoreProperties(value = { "classroom", "adelphie", "gradeLevel", "diets" }, allowSetters = true)
+    private Set<Child> children = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -72,34 +75,47 @@ public class Diet implements Serializable {
         this.description = description;
     }
 
-    public Set<ChildToDiet> getIds() {
-        return this.ids;
+    public Long getChildren() {
+        return this.children;
     }
 
-    public void setIds(Set<ChildToDiet> childToDiets) {
-        if (this.ids != null) {
-            this.ids.forEach(i -> i.removeIdDiet(this));
-        }
-        if (childToDiets != null) {
-            childToDiets.forEach(i -> i.addIdDiet(this));
-        }
-        this.ids = childToDiets;
-    }
-
-    public Diet ids(Set<ChildToDiet> childToDiets) {
-        this.setIds(childToDiets);
+    public Diet children(Long children) {
+        this.setChildren(children);
         return this;
     }
 
-    public Diet addId(ChildToDiet childToDiet) {
-        this.ids.add(childToDiet);
-        childToDiet.getIdDiets().add(this);
+    public void setChildren(Long children) {
+        this.children = children;
+    }
+
+    public Set<Child> getChildren() {
+        return this.children;
+    }
+
+    public void setChildren(Set<Child> children) {
+        if (this.children != null) {
+            this.children.forEach(i -> i.removeDiet(this));
+        }
+        if (children != null) {
+            children.forEach(i -> i.addDiet(this));
+        }
+        this.children = children;
+    }
+
+    public Diet children(Set<Child> children) {
+        this.setChildren(children);
         return this;
     }
 
-    public Diet removeId(ChildToDiet childToDiet) {
-        this.ids.remove(childToDiet);
-        childToDiet.getIdDiets().remove(this);
+    public Diet addChildren(Child child) {
+        this.children.add(child);
+        child.getDiets().add(this);
+        return this;
+    }
+
+    public Diet removeChildren(Child child) {
+        this.children.remove(child);
+        child.getDiets().remove(this);
         return this;
     }
 
@@ -129,6 +145,7 @@ public class Diet implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", description='" + getDescription() + "'" +
+            ", children=" + getChildren() +
             "}";
     }
 }

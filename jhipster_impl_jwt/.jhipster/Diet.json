@@ -12,14 +12,18 @@
     {
       "fieldName": "description",
       "fieldType": "String"
+    },
+    {
+      "fieldName": "children",
+      "fieldType": "Long"
     }
   ],
   "relationships": [
     {
       "relationshipType": "many-to-many",
-      "otherEntityName": "childToDiet",
-      "otherEntityRelationshipName": "idDiet",
-      "relationshipName": "id",
+      "otherEntityName": "child",
+      "otherEntityRelationshipName": "diet",
+      "relationshipName": "children",
       "ownerSide": false
     }
   ],

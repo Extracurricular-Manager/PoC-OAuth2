@@ -32,6 +32,9 @@
             <column name="adelphie" type="bigint">
                 <constraints nullable="true" />
             </column>
+            <column name="diet" type="bigint">
+                <constraints nullable="true" />
+            </column>
             <column name="classroom_id" type="bigint">
                 <constraints nullable="true" />
             </column>
@@ -44,6 +47,20 @@
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
         <dropDefaultValue tableName="child" columnName="birthday" columnDataType="${datetimeType}"/>
+    </changeSet>
+
+    <changeSet id="20220104151718-1-relations" author="jhipster">
+
+        <createTable tableName="rel_child__diet">
+            <column name="diet_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="child_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addPrimaryKey columnNames="child_id, diet_id" tableName="rel_child__diet"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -69,6 +86,7 @@
             <column name="grade_level" type="string"/>
             <column name="classroom" type="numeric"/>
             <column name="adelphie" type="numeric"/>
+            <column name="diet" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

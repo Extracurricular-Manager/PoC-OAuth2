@@ -1,9 +1,6 @@
 package com.mycompany.myapp.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
@@ -32,10 +29,6 @@ public class Family implements Serializable {
 
     @Column("postal_adress")
     private String postalAdress;
-
-    @Transient
-    @JsonIgnoreProperties(value = { "classroom", "adelphie", "gradeLevel", "ids" }, allowSetters = true)
-    private Set<Child> ids = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -102,37 +95,6 @@ public class Family implements Serializable {
 
     public void setPostalAdress(String postalAdress) {
         this.postalAdress = postalAdress;
-    }
-
-    public Set<Child> getIds() {
-        return this.ids;
-    }
-
-    public void setIds(Set<Child> children) {
-        if (this.ids != null) {
-            this.ids.forEach(i -> i.setAdelphie(null));
-        }
-        if (children != null) {
-            children.forEach(i -> i.setAdelphie(this));
-        }
-        this.ids = children;
-    }
-
-    public Family ids(Set<Child> children) {
-        this.setIds(children);
-        return this;
-    }
-
-    public Family addId(Child child) {
-        this.ids.add(child);
-        child.setAdelphie(this);
-        return this;
-    }
-
-    public Family removeId(Child child) {
-        this.ids.remove(child);
-        child.setAdelphie(null);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

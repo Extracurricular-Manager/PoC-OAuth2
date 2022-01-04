@@ -25,5 +25,17 @@
                                  constraintName="fk_child__grade_level_id"
                                  referencedColumnNames="id"
                                  referencedTableName="grade_level"/>
+
+        <addForeignKeyConstraint baseColumnNames="child_id"
+                                 baseTableName="rel_child__diet"
+                                 constraintName="fk_rel_child__diet__child_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="child"/>
+
+        <addForeignKeyConstraint baseColumnNames="diet_id"
+                                 baseTableName="rel_child__diet"
+                                 constraintName="fk_rel_child__diet__diet_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="diet"/>
     </changeSet>
 </databaseChangeLog>

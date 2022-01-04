@@ -15,11 +15,23 @@ import reactor.core.publisher.Mono;
 @SuppressWarnings("unused")
 @Repository
 public interface ChildRepository extends R2dbcRepository<Child, Long>, ChildRepositoryInternal {
-    @Query("SELECT * FROM child entity WHERE entity.class_id = :id")
-    Flux<Child> findByClass(Long id);
+    @Override
+    Mono<Child> findOneWithEagerRelationships(Long id);
 
-    @Query("SELECT * FROM child entity WHERE entity.class_id IS NULL")
-    Flux<Child> findAllWhereClassIsNull();
+    @Override
+    Flux<Child> findAllWithEagerRelationships();
+
+    @Override
+    Flux<Child> findAllWithEagerRelationships(Pageable page);
+
+    @Override
+    Mono<Void> deleteById(Long id);
+
+    @Query("SELECT * FROM child entity WHERE entity.classroom_id = :id")
+    Flux<Child> findByClassroom(Long id);
+
+    @Query("SELECT * FROM child entity WHERE entity.classroom_id IS NULL")
+    Flux<Child> findAllWhereClassroomIsNull();
 
     @Query("SELECT * FROM child entity WHERE entity.adelphie_id = :id")
     Flux<Child> findByAdelphie(Long id);
@@ -32,6 +44,11 @@ public interface ChildRepository extends R2dbcRepository<Child, Long>, ChildRepo
 
     @Query("SELECT * FROM child entity WHERE entity.grade_level_id IS NULL")
     Flux<Child> findAllWhereGradeLevelIsNull();
+
+    @Query(
+        "SELECT entity.* FROM child entity JOIN rel_child__diet joinTable ON entity.id = joinTable.child_id WHERE joinTable.diet_id = :id"
+    )
+    Flux<Child> findByDiet(Long id);
 
     // just to avoid having unambigous methods
     @Override
@@ -53,4 +70,12 @@ interface ChildRepositoryInternal {
     Mono<Child> findById(Long id);
     Flux<Child> findAllBy(Pageable pageable);
     Flux<Child> findAllBy(Pageable pageable, Criteria criteria);
+
+    Mono<Child> findOneWithEagerRelationships(Long id);
+
+    Flux<Child> findAllWithEagerRelationships();
+
+    Flux<Child> findAllWithEagerRelationships(Pageable page);
+
+    Mono<Void> deleteById(Long id);
 }
