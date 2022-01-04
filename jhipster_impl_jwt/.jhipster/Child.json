@@ -1,0 +1,70 @@
+{
+  "name": "Child",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "surname",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "birthday",
+      "fieldType": "ZonedDateTime"
+    },
+    {
+      "fieldName": "gradeLevel",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "classroom",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "adelphie",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "classroom",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "classroom"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "family",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "adelphie"
+    },
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "gradeLevel",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "gradeLevel"
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "childToDiet",
+      "otherEntityRelationshipName": "idChild",
+      "relationshipName": "id",
+      "ownerSide": false
+    }
+  ],
+  "entityTableName": "child",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220104151718"
+}

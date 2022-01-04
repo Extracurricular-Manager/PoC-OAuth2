@@ -1,0 +1,96 @@
+<div>
+  <h2 id="page-heading" data-cy="ChildHeading">
+    <span>Children</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-child"
+        [routerLink]="['/child/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Child </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="children?.length === 0">
+    <span>No children found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="children && children.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Id</span></th>
+          <th scope="col"><span>Name</span></th>
+          <th scope="col"><span>Surname</span></th>
+          <th scope="col"><span>Birthday</span></th>
+          <th scope="col"><span>Grade Level</span></th>
+          <th scope="col"><span>Classroom</span></th>
+          <th scope="col"><span>Adelphie</span></th>
+          <th scope="col"><span>Classroom</span></th>
+          <th scope="col"><span>Adelphie</span></th>
+          <th scope="col"><span>Grade Level</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let child of children; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/child', child.id, 'view']">{{ child.id }}</a>
+          </td>
+          <td>{{ child.name }}</td>
+          <td>{{ child.surname }}</td>
+          <td>{{ child.birthday | formatMediumDatetime }}</td>
+          <td>{{ child.gradeLevel }}</td>
+          <td>{{ child.classroom }}</td>
+          <td>{{ child.adelphie }}</td>
+          <td>
+            <div *ngIf="child.classroom">
+              <a [routerLink]="['/classroom', child.classroom?.id, 'view']">{{ child.classroom?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="child.adelphie">
+              <a [routerLink]="['/family', child.adelphie?.id, 'view']">{{ child.adelphie?.id }}</a>
+            </div>
+          </td>
+          <td>
+            <div *ngIf="child.gradeLevel">
+              <a [routerLink]="['/grade-level', child.gradeLevel?.id, 'view']">{{ child.gradeLevel?.id }}</a>
+            </div>
+          </td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/child', child.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(child)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

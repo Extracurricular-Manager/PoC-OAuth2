@@ -1,0 +1,66 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-child-to-diet-heading" data-cy="ChildToDietCreateUpdateHeading">Create or edit a Child To Diet</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_idChild">Id Child</label>
+          <input type="number" class="form-control" name="idChild" id="field_idChild" data-cy="idChild" formControlName="idChild" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_idDiet">Id Diet</label>
+          <input type="number" class="form-control" name="idDiet" id="field_idDiet" data-cy="idDiet" formControlName="idDiet" />
+        </div>
+
+        <div class="form-group">
+          <label for="field_idChildren">Id Child</label>
+          <select class="form-control" id="field_idChildren" data-cy="idChild" multiple name="idChildren" formControlName="idChildren">
+            <option
+              [ngValue]="getSelectedChild(childOption, editForm.get('idChildren')!.value)"
+              *ngFor="let childOption of childrenSharedCollection; trackBy: trackChildById"
+            >
+              {{ childOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="field_idDiets">Id Diet</label>
+          <select class="form-control" id="field_idDiets" data-cy="idDiet" multiple name="idDiets" formControlName="idDiets">
+            <option
+              [ngValue]="getSelectedDiet(dietOption, editForm.get('idDiets')!.value)"
+              *ngFor="let dietOption of dietsSharedCollection; trackBy: trackDietById"
+            >
+              {{ dietOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

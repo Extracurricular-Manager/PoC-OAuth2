@@ -1,0 +1,64 @@
+
+entity Child {
+	id Long,
+    name String,
+    surname String,
+    birthday ZonedDateTime,
+    gradeLevel String,
+    classroom Long,
+    adelphie Long
+}
+
+entity Family {
+	id Long,
+	referingParentName String,
+    referingParentSurname String,
+    telephoneNumber String,
+    postalAdress String
+}
+
+entity GradeLevel {
+	id String
+}
+
+entity Classroom {
+	id Long,
+    name String,
+    professor String
+}
+
+
+entity Diet {
+	id Long,
+    name String,
+	description String
+}
+
+entity ChildToDiet {
+	idChild Long,
+    idDiet Long
+}
+
+
+relationship ManyToOne {
+	Child{classroom} to Classroom{id}
+}
+
+relationship ManyToOne {
+	Child{adelphie} to Family{id}
+}
+
+relationship ManyToOne {
+	Child{gradeLevel} to GradeLevel{id}
+}
+
+relationship ManyToMany {
+	ChildToDiet{idChild} to Child{id}
+}
+relationship ManyToMany {
+	ChildToDiet{idDiet} to Diet{id}
+}
+
+
+dto * with mapstruct
+service * with serviceClass

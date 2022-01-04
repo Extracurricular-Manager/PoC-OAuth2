@@ -1,0 +1,44 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="family">
+      <h2 data-cy="familyDetailsHeading"><span>Family</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+          <span>{{ family.id }}</span>
+        </dd>
+        <dt><span>Refering Parent Name</span></dt>
+        <dd>
+          <span>{{ family.referingParentName }}</span>
+        </dd>
+        <dt><span>Refering Parent Surname</span></dt>
+        <dd>
+          <span>{{ family.referingParentSurname }}</span>
+        </dd>
+        <dt><span>Telephone Number</span></dt>
+        <dd>
+          <span>{{ family.telephoneNumber }}</span>
+        </dd>
+        <dt><span>Postal Adress</span></dt>
+        <dd>
+          <span>{{ family.postalAdress }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/family', family.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

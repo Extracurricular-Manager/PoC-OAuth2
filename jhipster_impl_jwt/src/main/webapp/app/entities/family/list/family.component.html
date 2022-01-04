@@ -1,0 +1,74 @@
+<div>
+  <h2 id="page-heading" data-cy="FamilyHeading">
+    <span>Families</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadAll()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-family"
+        [routerLink]="['/family/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Family </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="families?.length === 0">
+    <span>No families found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="families && families.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr>
+          <th scope="col"><span>Id</span></th>
+          <th scope="col"><span>Refering Parent Name</span></th>
+          <th scope="col"><span>Refering Parent Surname</span></th>
+          <th scope="col"><span>Telephone Number</span></th>
+          <th scope="col"><span>Postal Adress</span></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let family of families; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/family', family.id, 'view']">{{ family.id }}</a>
+          </td>
+          <td>{{ family.referingParentName }}</td>
+          <td>{{ family.referingParentSurname }}</td>
+          <td>{{ family.telephoneNumber }}</td>
+          <td>{{ family.postalAdress }}</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button type="submit" [routerLink]="['/family', family.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button type="submit" [routerLink]="['/family', family.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button type="submit" (click)="delete(family)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

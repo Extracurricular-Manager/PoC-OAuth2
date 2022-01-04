@@ -1,0 +1,50 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="childToDiet">
+      <h2 data-cy="childToDietDetailsHeading"><span>Child To Diet</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ childToDiet.id }}</span>
+        </dd>
+        <dt><span>Id Child</span></dt>
+        <dd>
+          <span>{{ childToDiet.idChild }}</span>
+        </dd>
+        <dt><span>Id Diet</span></dt>
+        <dd>
+          <span>{{ childToDiet.idDiet }}</span>
+        </dd>
+        <dt><span>Id Child</span></dt>
+        <dd>
+          <span *ngFor="let idChild of childToDiet.idChildren; let last = last">
+            <a [routerLink]="['/child', idChild?.id, 'view']">{{ idChild.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+        <dt><span>Id Diet</span></dt>
+        <dd>
+          <span *ngFor="let idDiet of childToDiet.idDiets; let last = last">
+            <a [routerLink]="['/diet', idDiet?.id, 'view']">{{ idDiet.id }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/child-to-diet', childToDiet.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

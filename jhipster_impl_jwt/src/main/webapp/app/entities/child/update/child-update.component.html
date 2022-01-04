@@ -1,0 +1,120 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-child-heading" data-cy="ChildCreateUpdateHeading">Create or edit a Child</h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="form-group" [hidden]="editForm.get('id')!.value == null">
+          <label class="form-control-label" for="field_id">Id</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_surname">Surname</label>
+          <input type="text" class="form-control" name="surname" id="field_surname" data-cy="surname" formControlName="surname" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_birthday">Birthday</label>
+          <div class="d-flex">
+            <input
+              id="field_birthday"
+              data-cy="birthday"
+              type="datetime-local"
+              class="form-control"
+              name="birthday"
+              formControlName="birthday"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_gradeLevel">Grade Level</label>
+          <input
+            type="text"
+            class="form-control"
+            name="gradeLevel"
+            id="field_gradeLevel"
+            data-cy="gradeLevel"
+            formControlName="gradeLevel"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_class">Class</label>
+          <input type="number" class="form-control" name="class" id="field_class" data-cy="class" formControlName="class" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_adelphie">Adelphie</label>
+          <input type="number" class="form-control" name="adelphie" id="field_adelphie" data-cy="adelphie" formControlName="adelphie" />
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_class">Class</label>
+          <select class="form-control" id="field_class" data-cy="class" name="class" formControlName="class">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="classroomOption.id === editForm.get('class')!.value?.id ? editForm.get('class')!.value : classroomOption"
+              *ngFor="let classroomOption of classroomsSharedCollection; trackBy: trackClassroomById"
+            >
+              {{ classroomOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_adelphie">Adelphie</label>
+          <select class="form-control" id="field_adelphie" data-cy="adelphie" name="adelphie" formControlName="adelphie">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="familyOption.id === editForm.get('adelphie')!.value?.id ? editForm.get('adelphie')!.value : familyOption"
+              *ngFor="let familyOption of familiesSharedCollection; trackBy: trackFamilyById"
+            >
+              {{ familyOption.id }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-control-label" for="field_gradeLevel">Grade Level</label>
+          <select class="form-control" id="field_gradeLevel" data-cy="gradeLevel" name="gradeLevel" formControlName="gradeLevel">
+            <option [ngValue]="null"></option>
+            <option
+              [ngValue]="
+                gradeLevelOption.id === editForm.get('gradeLevel')!.value?.id ? editForm.get('gradeLevel')!.value : gradeLevelOption
+              "
+              *ngFor="let gradeLevelOption of gradeLevelsSharedCollection; trackBy: trackGradeLevelById"
+            >
+              {{ gradeLevelOption.id }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span>Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

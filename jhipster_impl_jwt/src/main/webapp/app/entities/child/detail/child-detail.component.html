@@ -1,0 +1,70 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="child">
+      <h2 data-cy="childDetailsHeading"><span>Child</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>Id</span></dt>
+        <dd>
+          <span>{{ child.id }}</span>
+        </dd>
+        <dt><span>Name</span></dt>
+        <dd>
+          <span>{{ child.name }}</span>
+        </dd>
+        <dt><span>Surname</span></dt>
+        <dd>
+          <span>{{ child.surname }}</span>
+        </dd>
+        <dt><span>Birthday</span></dt>
+        <dd>
+          <span>{{ child.birthday | formatMediumDatetime }}</span>
+        </dd>
+        <dt><span>Grade Level</span></dt>
+        <dd>
+          <span>{{ child.gradeLevel }}</span>
+        </dd>
+        <dt><span>Class</span></dt>
+        <dd>
+          <span>{{ child.class }}</span>
+        </dd>
+        <dt><span>Adelphie</span></dt>
+        <dd>
+          <span>{{ child.adelphie }}</span>
+        </dd>
+        <dt><span>Class</span></dt>
+        <dd>
+          <div *ngIf="child.class">
+            <a [routerLink]="['/classroom', child.class?.id, 'view']">{{ child.class?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Adelphie</span></dt>
+        <dd>
+          <div *ngIf="child.adelphie">
+            <a [routerLink]="['/family', child.adelphie?.id, 'view']">{{ child.adelphie?.id }}</a>
+          </div>
+        </dd>
+        <dt><span>Grade Level</span></dt>
+        <dd>
+          <div *ngIf="child.gradeLevel">
+            <a [routerLink]="['/grade-level', child.gradeLevel?.id, 'view']">{{ child.gradeLevel?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button type="button" [routerLink]="['/child', child.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

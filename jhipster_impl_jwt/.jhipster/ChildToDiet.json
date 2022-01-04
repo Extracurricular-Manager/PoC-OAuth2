@@ -1,0 +1,39 @@
+{
+  "name": "ChildToDiet",
+  "fields": [
+    {
+      "fieldName": "idChild",
+      "fieldType": "Long"
+    },
+    {
+      "fieldName": "idDiet",
+      "fieldType": "Long"
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "child",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "idChild",
+      "ownerSide": true
+    },
+    {
+      "relationshipType": "many-to-many",
+      "otherEntityName": "diet",
+      "otherEntityRelationshipName": "id",
+      "relationshipName": "idDiet",
+      "ownerSide": true
+    }
+  ],
+  "entityTableName": "child_to_diet",
+  "dto": "mapstruct",
+  "pagination": "no",
+  "service": "serviceClass",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20220104151723"
+}

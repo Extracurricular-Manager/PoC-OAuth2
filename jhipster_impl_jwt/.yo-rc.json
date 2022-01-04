@@ -44,6 +44,8 @@
     "clientPackageManager": "npm",
     "clientThemeVariant": "",
     "enableGradleEnterprise": false,
-    "languages": ["en", "fr"]
+    "languages": ["en", "fr"],
+    "entities": ["Child", "Family", "GradeLevel", "Classroom", "Diet", "ChildToDiet"],
+    "lastLiquibaseTimestamp": 1641309443000
   }
 }

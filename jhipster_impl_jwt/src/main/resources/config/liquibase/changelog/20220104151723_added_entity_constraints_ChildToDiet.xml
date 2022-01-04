@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd">
+    <!--
+        Added the constraints for entity ChildToDiet.
+    -->
+    <changeSet id="20220104151723-2" author="jhipster">
+
+        <addForeignKeyConstraint baseColumnNames="child_to_diet_id"
+                                 baseTableName="rel_child_to_diet__id_child"
+                                 constraintName="fk_rel_child_to_diet__id_child__child_to_diet_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="child_to_diet"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_child_id"
+                                 baseTableName="rel_child_to_diet__id_child"
+                                 constraintName="fk_rel_child_to_diet__id_child__id_child_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="child"/>
+
+        <addForeignKeyConstraint baseColumnNames="child_to_diet_id"
+                                 baseTableName="rel_child_to_diet__id_diet"
+                                 constraintName="fk_rel_child_to_diet__id_diet__child_to_diet_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="child_to_diet"/>
+
+        <addForeignKeyConstraint baseColumnNames="id_diet_id"
+                                 baseTableName="rel_child_to_diet__id_diet"
+                                 constraintName="fk_rel_child_to_diet__id_diet__id_diet_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="diet"/>
+    </changeSet>
+</databaseChangeLog>
